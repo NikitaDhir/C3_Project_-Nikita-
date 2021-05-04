@@ -52,6 +52,33 @@ class RestaurantTest {
         assertEquals(0, totalPrice);
     }
 
-    
+    @Test
+    public void adding_items_to_order_and_display_total_value_as_their_individual_price_total() throws itemNotFoundException {
+        restaurant =new Restaurant("cafe1","Delhi",openingTime,closingTime);
+        restaurant.addToMenu("Item1",100);
+        restaurant.addToMenu("Item2", 200);
+        restaurant.addToMenu("Item3", 300);
+
+        List<String> itemNames = new ArrayList<String>();
+        itemNames.add("Item1");
+        itemNames.add("Item3");
+
+        int totalPrice = restaurant.calculateTotalPrice(itemNames);
+        assertEquals(400, totalPrice);
+    }
+
+    @Test
+    public void adding_items_to_order_which_are_not_in_menu_should_throw_exception() throws itemNotFoundException {
+        restaurant =new Restaurant("cafe1","Delhi",openingTime,closingTime);
+        restaurant.addToMenu("Item1",100);
+        restaurant.addToMenu("Item2", 200);
+        restaurant.addToMenu("Item3", 300);
+
+        List<String> itemNames = new ArrayList<String>();
+        itemNames.add("Item5");
+
+        assertThrows(itemNotFoundException.class,
+                ()->restaurant.calculateTotalPrice(itemNames));
+    }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }
